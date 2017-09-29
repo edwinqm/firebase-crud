@@ -1,0 +1,12 @@
+<div *ngIf="user">
+
+  <div class="card">
+    <div class="card-body">
+      <pre>{{ user | json }}</pre>
+      <button (click)="onEdit()" class="btn btn-warning btn-sm">Edit</button>
+      <button class="btn btn-danger btn-sm" (click)="deleteUser()">Delete</button>
+    </div>
+  </div>
+  <br>
+
+</div>

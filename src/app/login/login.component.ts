@@ -1,10 +1,11 @@
+import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AngularFireModule } from 'angularfire2';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,11 @@ export class LoginComponent implements OnInit {
   state: string;
   error: any;
 
-  constructor(public afAuth: AngularFireAuth, private router: Router) {
+  constructor(
+    public afAuth: AngularFireAuth,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.user = afAuth.authState;
     afAuth.authState.subscribe((user: firebase.User) => {
       if (user) {
@@ -30,12 +35,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(formData) {
     if (formData.valid) {
-      console.log(formData.value);
-      this.afAuth.auth.signInWithEmailAndPassword(formData.value.email, formData.value.password)
-        .then((success) => {
-          console.log(success);
-          this.router.navigate(['/users']);
-        })
+      this.authService.signIn(formData.value.email, formData.value.password)
         .catch((err) => {
           console.log(err);
           this.error = err;

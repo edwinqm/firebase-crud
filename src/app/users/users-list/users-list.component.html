@@ -1,0 +1,10 @@
+
+<a routerLink="create" class="btn btn-success active" role="button" routerLinkActive="active">New User</a>
+
+<h3>Users</h3>
+
+<div *ngFor="let user of users | async">
+
+  <app-user-details [user]='user'></app-user-details>
+
+</div>

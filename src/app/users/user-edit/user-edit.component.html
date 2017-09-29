@@ -1,0 +1,33 @@
+<h3>Edit User</h3>
+
+<div [hidden]="!submitted" class="alert alert-success">
+    <span>You submitted successfully.</span>
+</div>
+
+<div class="alert alert-danger" *ngIf="error">
+    <span>{{ error }}</span>
+</div>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+        <input class="form-control" type="text" formControlName="displayName" placeholder="Name" [ngClass]="{ 
+      'is-invalid': userForm.controls.displayName.invalid && userForm.controls.displayName.dirty, 
+      'is-valid': userForm.controls.displayName.valid && userForm.controls.displayName.dirty }" [(ngModel)]="user.displayName">
+        <div class="alert alert-danger" *ngIf="!userForm.controls.displayName.valid && userForm.controls.displayName.touched">
+            <span *ngIf="userForm.controls.displayName.errors.required">Name required</span>
+            <span *ngIf="userForm.controls.displayName.errors.minlength">Min 3 characters</span>
+        </div>
+    </div>
+
+    <div class="form-check">
+        <label class="form-check-label">
+      <input type="checkbox" class="form-check-input" formControlName="changePassword">
+     Send E-mail Reset Password?
+    </label>
+    </div>
+
+    <input type="submit" class="btn btn-primary btn-sm" value="Submit Form" [disabled]="!userForm.valid">
+    <button type="button" routerLink="/users" class="btn btn-default btn-sm">Cancel</button>
+
+</form>

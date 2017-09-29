@@ -1,0 +1,66 @@
+<h3>New User</h3>
+
+<div [hidden]="!submitted" class="alert alert-success">
+  <span>You submitted successfully.</span>
+</div>
+
+<div class="alert alert-danger" *ngIf="error">
+  <span>{{ error }}</span>
+</div>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <input class="form-control" type="email" formControlName="email" placeholder="Email" [ngClass]="{
+       'is-invalid': email.invalid && email.dirty, 
+       'is-valid': email.valid && email.dirty }" [(ngModel)]="user.email">
+    <div class="alert alert-danger" *ngIf="!email.valid && email.touched">
+      <span *ngIf="email.errors.required">Email required<br></span>
+      <span *ngIf="email.errors.pattern">Invalid format</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input class="form-control" type="password" formControlName="password" placeholder="Password" [ngClass]="{ 
+      'is-invalid': password.invalid && password.dirty, 
+      'is-valid': password.valid && password.dirty }" [(ngModel)]="user.password">
+    <div class="alert alert-danger" *ngIf="!password.valid && password.touched">
+      <span *ngIf="password.errors.required">Password required</span>
+      <span *ngIf="password.errors.minlength">Min 6 characters</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input class="form-control" type="password" formControlName="passwordConfirm" placeholder="Password Confirm" [(ngModel)]="passwordConfirm"
+      [ngClass]="{ 
+        'is-invalid': userForm.controls.passwordConfirm.invalid && userForm.controls.passwordConfirm.dirty, 
+        'is-valid': userForm.controls.passwordConfirm.valid && userForm.controls.passwordConfirm.dirty }" [(ngModel)]="passwordConfirm">
+    <div class="alert alert-danger" *ngIf="!userForm.controls.passwordConfirm.valid && userForm.controls.passwordConfirm.touched">
+      <span *ngIf="userForm.controls.passwordConfirm.errors.required">Password required</span>
+      <span *ngIf="userForm.controls.passwordConfirm.errors.minlength">Min 6 characters</span>
+      <span *ngIf="userForm.controls.passwordConfirm.errors.pattern">No match passwords</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input class="form-control" type="text" formControlName="displayName" placeholder="Display Name" [ngClass]="{ 
+      'is-invalid': displayName.invalid && displayName.dirty, 
+      'is-valid': displayName.valid && displayName.dirty }" [(ngModel)]="user.displayName">
+    <div class="alert alert-danger" *ngIf="!displayName.valid && displayName.touched">
+      <span *ngIf="displayName.errors.required">Name required</span>
+      <span *ngIf="displayName.errors.minlength">Min 3 characters</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Phone Number" [(ngModel)]="user.phoneNumber">
+  </div>
+  <hr>
+  <div class="form-group">
+    <input type="text" class="form-control" formControlName="address" placeholder="Address" [(ngModel)]="user.address">
+  </div>
+
+  <input type="submit" class="btn btn-primary btn-sm" value="Submit Form" [disabled]="!userForm.valid">
+  <button type="button" routerLink="/users" class="btn btn-default btn-sm">Cancel</button>
+
+</form>
